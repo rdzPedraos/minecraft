@@ -32,3 +32,35 @@ body {
 	-ms-transform: translate(-50%, -50%);
 	-o-transform: translate(-50%, -50%);
 }
+
+.texture-selector {
+	z-index: 1;
+	display: flex;
+	position: absolute;
+	gap: 0.5rem;
+	padding: 0.5rem;
+	bottom: 32px;
+	left: 50%;
+	background-color: rgba(255, 255, 255, 0.5);
+
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+}
+
+.texture-selector.hidden {
+	display: none;
+}
+
+.texture-selector img {
+	width: 70px;
+	image-rendering: pixelated;
+}
+
+.texture-selector img.selected {
+	outline: 2px solid whitesmoke;
+	border: 1px solid #0009;
+	box-shadow: 0 0 5px black;
+}

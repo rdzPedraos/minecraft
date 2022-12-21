@@ -13,9 +13,9 @@ export const Player = () => {
 		useKeyBoard();
 	const { camera } = useThree();
 	const [ref, api] = useSphere(() => ({
-		mass: 500,
+		mass: 1,
 		type: 'Dynamic',
-		position: [0, 1, 0],
+		position: [0, 0.5, 0],
 	}));
 
 	const pos = useRef([0, 0, 0]);
@@ -48,12 +48,13 @@ export const Player = () => {
 			.applyEuler(camera.rotation);
 
 		// Asignamos la velocidad en los ejes correspondientes
-		api.velocity.set(direction.x, vel.current[1], direction.z);
-
-		// Si va a saltar
-		if (jump && Math.abs(vel.current[1]) < 0.01) {
-			api.velocity.set(vel.current[0], CHARACTER_JUMP_FORCE, vel.current[2]);
-		}
+		api.velocity.set(
+			direction.x,
+			jump && Math.abs(vel.current[1]) < 0.005
+				? CHARACTER_JUMP_FORCE
+				: vel.current[1],
+			direction.z
+		);
 	});
 
 	return <mesh ref={ref} />;

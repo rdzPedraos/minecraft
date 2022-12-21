@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../hooks/useStore';
-import * as images from '../images/textures';
+import * as images from '../images/images';
 import { useKeyBoard } from '../hooks/useKeyboard';
 
 export const TextureSelector = () => {
@@ -10,9 +10,18 @@ export const TextureSelector = () => {
 		state.setTexture,
 	]);
 
+	useEffect(() => {
+		const visibilityTimeout = setTimeout(() => {
+			setVisible(false);
+		}, 1000);
+		setVisible(true);
+
+		return () => clearTimeout(visibilityTimeout);
+	}, [texture]);
+
 	const { dirt, grass, glass, wood, log } = useKeyBoard();
 
-	useEffectffect(() => {
+	useEffect(() => {
 		const options = {
 			dirt,
 			grass,
@@ -20,13 +29,28 @@ export const TextureSelector = () => {
 			wood,
 			log,
 		};
-
-		const [selectedTexture] = Object.entries(options).find(
+		const selectedTexture = Object.entries(options).find(
 			([texture, isEnabled]) => isEnabled
 		);
 
 		if (selectedTexture) {
-			setTexture(selectedTexture);
+			const [nameTexture] = selectedTexture;
+			setTexture(nameTexture);
 		}
 	}, [dirt, grass, glass, wood, log]);
+
+	return (
+		<div className={`texture-selector ${visible ? '' : 'hidden'}`}>
+			{Object.entries(images).map(([imgKey, img]) => {
+				return (
+					<img
+						className={texture === imgKey.replace('Img', '') ? 'selected' : ''}
+						key={imgKey}
+						src={img}
+						alt={imgKey}
+					/>
+				);
+			})}
+		</div>
+	);
 };
