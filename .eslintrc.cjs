@@ -24,5 +24,7 @@ module.exports = {
 	plugins: ['react'],
 	rules: {
 		'react/no-unknown-property': 'off',
+		noUnusedLocals: false,
+		noUnusedParameters: false,
 	},
 };

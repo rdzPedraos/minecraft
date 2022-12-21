@@ -6,14 +6,14 @@ import { useKeyBoard } from '../hooks/useKeyboard';
 
 const CHARACTER_SPEED_WALK = 3;
 const CHARACTER_SPEED_RUN = 4;
-const CHARACTER_JUMP_FORCE = 2;
+const CHARACTER_JUMP_FORCE = 2.5;
 
 export const Player = () => {
 	const { moveBackward, moveForward, moveLeft, moveRight, run, jump } =
 		useKeyBoard();
 	const { camera } = useThree();
 	const [ref, api] = useSphere(() => ({
-		mass: 100,
+		mass: 500,
 		type: 'Dynamic',
 		position: [0, 1, 0],
 	}));
@@ -51,7 +51,7 @@ export const Player = () => {
 		api.velocity.set(direction.x, vel.current[1], direction.z);
 
 		// Si va a saltar
-		if (jump && Math.abs(pos.current[1]) < 0.5) {
+		if (jump && Math.abs(vel.current[1]) < 0.01) {
 			api.velocity.set(vel.current[0], CHARACTER_JUMP_FORCE, vel.current[2]);
 		}
 	});
